@@ -8,6 +8,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url"; // allow to property set the path when we configure directory
+import { register } from "./controllers/auth.js"
 
 // CONFIGURATIONS (middleware configs and different packages configs)
 const __filename = fileURLToPath(import.meta.url) // grab fileurl 
@@ -35,6 +36,9 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({ storage });
+
+/* ROUTES WITH FILES */
+app.post("/auth/register", upload.single("picture"), register);
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
